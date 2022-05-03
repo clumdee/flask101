@@ -15,18 +15,18 @@ app = Flask(__name__)
 
 
 # simple endpoint
-@app.route("/")
+@app.get("/")
 def home():
     logger.debug("calling home")
     return "This is a home page"
 
 # pass part of URL as an argument
-@app.route("/<name>")
+@app.get("/<name>")
 def user(name):
     return f"Hello {name}!"
 
 # straight redirect / redirect with url_for
-@app.route("/admin")
+@app.get("/admin")
 def admin():
     # return redirect("/not-you")
     return redirect(url_for("user", name="not admin"))
