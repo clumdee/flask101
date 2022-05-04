@@ -5,17 +5,7 @@
     </head>
     <body>
         <h1>This is a home page</h1>
-        <p>Hello {{ name }} {{lastname}}!</p>
-
-        {% for x in range(10) %}
-            {% if x % 2 == 0%}
-                <p>{{x}}</p>
-            {% elif x < 6 %}
-                <p>Odd number less than 6</p>
-            {% else %}
-                <p>Odd number greater than 6</p>
-            {% endif %}
-        {% endfor %}
+        <p>Hello {{ content.name }} {{ content.lastname }}!</p>
 
     </body>
 </html>
