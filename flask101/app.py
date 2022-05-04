@@ -1,6 +1,6 @@
+from __init__ import __version__
 import logging
 from flask import Flask, redirect, url_for, render_template
-from more_itertools import last
 
 # simple log
 logger_name = "app"
@@ -36,4 +36,5 @@ def admin():
 
 
 if __name__ == '__main__':
+    logger.debug(f"Running version {__version__}")
     app.run(debug=True)
