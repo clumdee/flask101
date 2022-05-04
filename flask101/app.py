@@ -1,5 +1,6 @@
 import logging
 from flask import Flask, redirect, url_for, render_template
+from more_itertools import last
 
 # simple log
 logger_name = "app"
@@ -22,10 +23,10 @@ def home():
     return render_template("index.html")
 
 # pass part of URL as an argument
-@app.get("/<name>")
+@app.get("/<name>-<lastname>")
 def user(name, lastname):
     # return f"Hello {name}!"
-    return render_template("index.html", name=name)
+    return render_template("index.html", name=name, lastname=lastname)
 
 # straight redirect / redirect with url_for
 @app.get("/admin")
