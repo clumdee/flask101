@@ -6,5 +6,12 @@
     <body>
         <h1>This is a home page</h1>
         <p>Hello {{ name }} {{lastname}}!</p>
+
+        {% for x in range(10) %}
+            {% if x % 2 == 0%}
+                <p>{{x}}</p>
+            {% endif %}
+        {% endfor %}
+
     </body>
 </html>
