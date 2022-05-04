@@ -20,14 +20,14 @@ app = Flask(__name__)
 def home():
     logger.debug("calling home")
     # return "This is a home page"
-    content = []
+    content = dict()
     return render_template("index.html", content=content)
 
 # pass part of URL as an argument
 @app.get("/<name>-<lastname>")
 def user(name, lastname):
     # return f"Hello {name}!"
-    content = [name, lastname]
+    content = {'name':name, 'lastname':lastname}
     return render_template("index.html", content=content)
 
 # straight redirect / redirect with url_for
