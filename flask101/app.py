@@ -23,8 +23,9 @@ def home():
 
 # pass part of URL as an argument
 @app.get("/<name>")
-def user(name):
-    return f"Hello {name}!"
+def user(name, lastname):
+    # return f"Hello {name}!"
+    return render_template("index.html", name=name)
 
 # straight redirect / redirect with url_for
 @app.get("/admin")
@@ -34,4 +35,4 @@ def admin():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
