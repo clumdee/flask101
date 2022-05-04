@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 
 # simple log
 logger_name = "app"
@@ -18,7 +18,8 @@ app = Flask(__name__)
 @app.get("/")
 def home():
     logger.debug("calling home")
-    return "This is a home page"
+    # return "This is a home page"
+    return render_template("index.html")
 
 # pass part of URL as an argument
 @app.get("/<name>")
