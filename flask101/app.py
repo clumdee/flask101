@@ -1,7 +1,7 @@
 from crypt import methods
 from __init__ import __version__
 import logging
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, session
 
 # simple log
 logger_name = "app"
@@ -14,6 +14,11 @@ hdler.setFormatter(formatter)
 logger.addHandler(hdler)
 
 app = Flask(__name__)
+
+# secret key for session
+# set the secret key to some random bytes
+# keep this really secret!
+app.secret_key = b'_r@nd0m'
 
 
 # simple endpoint
@@ -43,14 +48,18 @@ def admin():
 def login():
     if request.method == "POST":
         user = request.form['nm']
-        return redirect(url_for("user", usr=user))
+        session["user"] = user
+        return redirect(url_for("user"))
     else:
         return render_template("login.html")
 
-@app.get('/<usr>')
-def user(usr):
-    return f"<h1>{usr}</h1>"
-
+@app.get('/user')
+def user():
+    if "user" in session.keys():
+        user = session["user"] 
+        return f"<h1>{user}</h1>"
+    else:
+        return redirect(url_for("login"))
 
 if __name__ == '__main__':
     logger.debug(f"Running version {__version__}")
