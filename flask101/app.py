@@ -1,6 +1,7 @@
+from crypt import methods
 from __init__ import __version__
 import logging
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 
 # simple log
 logger_name = "app"
@@ -24,17 +25,31 @@ def home():
     return render_template("index.html", content=content)
 
 # pass part of URL as an argument
-@app.get("/<name>-<lastname>")
-def user(name, lastname):
-    # return f"Hello {name}!"
-    content = {'name':name, 'lastname':lastname}
-    return render_template("index.html", content=content)
+# @app.get("/<name>-<lastname>")
+# def user(name, lastname):
+#     # return f"Hello {name}!"
+#     content = {'name':name, 'lastname':lastname}
+#     return render_template("index.html", content=content)
 
 # straight redirect / redirect with url_for
 @app.get("/admin")
 def admin():
     # return redirect("/not-you")
     return redirect(url_for("user", name="not admin"))
+
+
+# learning GET/POST
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        user = request.form['nm']
+        return redirect(url_for("user", usr=user))
+    else:
+        return render_template("login.html")
+
+@app.get('/<usr>')
+def user(usr):
+    return f"<h1>{usr}</h1>"
 
 
 if __name__ == '__main__':
