@@ -1,6 +1,6 @@
-from crypt import methods
 from __init__ import __version__
 import logging
+import datetime
 from flask import Flask, redirect, url_for, render_template, request, session
 
 # simple log
@@ -18,7 +18,9 @@ app = Flask(__name__)
 # secret key for session
 # set the secret key to some random bytes
 # keep this really secret!
+# set session lifetime if needed, defaults to 31 days
 app.secret_key = b'_r@nd0m'
+app.permanent_session_lifetime = datetime.timedelta(days=7)
 
 
 # simple endpoint
