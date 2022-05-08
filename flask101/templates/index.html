@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Home Page</title>
-    </head>
-    <body>
-        <h1>This is a home page</h1>
-        <p>Hello {{ content.name }} {{ content.lastname }}!</p>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+    Hello {{ content.name }} {{ content.lastname }}!
+{% endblock %}
