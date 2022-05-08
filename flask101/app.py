@@ -39,4 +39,4 @@ def admin():
 
 if __name__ == '__main__':
     logger.debug(f"Running version {__version__}")
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
