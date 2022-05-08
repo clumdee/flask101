@@ -61,6 +61,12 @@ def user():
     else:
         return redirect(url_for("login"))
 
+@app.get('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('login'))
+
+
 if __name__ == '__main__':
     logger.debug(f"Running version {__version__}")
     app.run(debug=True, port=5000)
