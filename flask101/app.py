@@ -4,12 +4,12 @@ import datetime
 from flask import Flask, redirect, url_for, render_template, request, session
 
 # simple log
-logger_name = "app"
+logger_name = 'app'
 logger = logging.getLogger(logger_name)
 logger.setLevel(logging.DEBUG)
 # location w.r.t. working directory that calls this Flask app
-hdler = logging.FileHandler(f"{logger_name}.log")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+hdler = logging.FileHandler(f'{logger_name}.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 hdler.setFormatter(formatter)
 logger.addHandler(hdler)
 
@@ -24,46 +24,46 @@ app.permanent_session_lifetime = datetime.timedelta(days=7)
 
 
 # simple endpoint
-@app.get("/")
+@app.get('/')
 def home():
-    logger.debug("calling home")
-    # return "This is a home page"
+    logger.debug('calling home')
+    # return 'This is a home page'
     content = dict()
-    return render_template("index.html", content=content)
+    return render_template('index.html', content=content)
 
 # pass part of URL as an argument
-# @app.get("/<name>-<lastname>")
+# @app.get('/<name>-<lastname>')
 # def user(name, lastname):
-#     # return f"Hello {name}!"
+#     # return f'Hello {name}!'
 #     content = {'name':name, 'lastname':lastname}
-#     return render_template("index.html", content=content)
+#     return render_template('index.html', content=content)
 
 # straight redirect / redirect with url_for
-@app.get("/admin")
+@app.get('/admin')
 def admin():
-    # return redirect("/not-you")
-    return redirect(url_for("user", name="not admin"))
+    # return redirect('/not-you')
+    return redirect(url_for('user', name='not admin'))
 
 
 # learning GET/POST
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "POST":
+    if request.method == 'POST':
         user = request.form['nm']
-        session["user"] = user
-        return redirect(url_for("user"))
+        session['user'] = user
+        return redirect(url_for('user'))
     else:
         if 'user' in session.keys():
             return redirect(url_for('user'))
-        return render_template("login.html")
+        return render_template('login.html')
 
 @app.get('/user')
 def user():
-    if "user" in session.keys():
-        user = session["user"] 
-        return f"<h1>{user}</h1>"
+    if 'user' in session.keys():
+        user = session['user'] 
+        return f'<h1>{user}</h1>'
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for('login'))
 
 @app.get('/logout')
 def logout():
@@ -72,5 +72,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    logger.debug(f"Running version {__version__}")
+    logger.debug(f'Running version {__version__}')
     app.run(debug=True, port=5000)
