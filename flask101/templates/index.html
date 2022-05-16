@@ -4,4 +4,5 @@
 
 {% block content %}
     Hello {{ content.name }} {{ content.lastname }}!
+    <image src="{{ url_for('static', filename='images/hello_sticker.png') }}"></image>
 {% endblock %}
