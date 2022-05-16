@@ -1,19 +1,10 @@
 from __init__ import __version__
 import os
-import logging
 import datetime
 from flask import Flask, redirect, url_for, render_template, request, session, flash
-from flask_sqlalchemy import SQLAlchemy
+from logger import logger
+from db import db, Users
 
-# simple log
-logger_name = 'app'
-logger = logging.getLogger(logger_name)
-logger.setLevel(logging.DEBUG)
-# location w.r.t. working directory that calls this Flask app
-hdler = logging.FileHandler(f'{logger_name}.log')
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-hdler.setFormatter(formatter)
-logger.addHandler(hdler)
 
 app = Flask(__name__)
 
@@ -31,18 +22,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # optional, suppress noti
 
 
-# define SQLAlchemy object
-db = SQLAlchemy(app)
-
-# create a model (table) for users
-class Users(db.Model):
-    _id = db.Column('id', db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
+# initialize SQLAlchemy object
+db.app = app
+db.init_app(app)
 
 
 # simple endpoint
