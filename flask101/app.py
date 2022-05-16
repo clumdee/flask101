@@ -1,4 +1,3 @@
-from crypt import methods
 from __init__ import __version__
 import logging
 import datetime
