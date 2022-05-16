@@ -1,7 +1,7 @@
 from __init__ import __version__
 import logging
 import datetime
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request, session, flash
 
 # simple log
 logger_name = 'app'
@@ -68,6 +68,7 @@ def user():
 @app.get('/logout')
 def logout():
     session.pop('user', None)
+    flash('You have been logged out!', category='info')
     return redirect(url_for('login'))
 
 
