@@ -1,7 +1,9 @@
+from crypt import methods
 from __init__ import __version__
 import logging
 import datetime
 from flask import Flask, redirect, url_for, render_template, request, session, flash
+import sqlalchemy
 
 # simple log
 logger_name = 'app'
@@ -59,11 +61,22 @@ def login():
             return redirect(url_for('user'))
         return render_template('login.html')
 
-@app.get('/user')
+@app.route('/user', methods=['GET', 'POST'])
 def user():
     if 'user' in session:
         user = session['user'] 
-        return render_template('user.html', user=user)
+        
+        if request.method == 'POST':
+            email = request.form['email']
+            session['email'] = email
+            flash('Email was saved!')
+        else:
+            if 'email' in session:
+                email = session['email']
+            else:
+                email = None
+
+        return render_template('user.html', user=user, email=email)
     else:
         flash('You are not logged in!')
         return redirect(url_for('login'))
