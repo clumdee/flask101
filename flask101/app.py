@@ -73,6 +73,17 @@ def login():
     if request.method == 'POST':
         user = request.form['nm']
         session['user'] = user
+
+        # check if a user exists and retrieve their email
+        # create a new user record with NULL email if not exists
+        found_user = users.query.filter_by(name=user).first()
+        if found_user:
+            session['email'] = found_user.email
+        else:
+            usr = users(user, None)
+            db.session.add(usr)
+            db.session.commit()
+
         flash('Login successful!')
         return redirect(url_for('user'))
     else:
