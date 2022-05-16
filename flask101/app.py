@@ -112,4 +112,6 @@ def logout():
 
 if __name__ == '__main__':
     logger.debug(f'Running version {__version__}')
+    # create (or read existing) database before start
+    db.create_all()
     app.run(debug=True, port=5000)
