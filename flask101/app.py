@@ -1,8 +1,9 @@
 from __init__ import __version__
+import os
 import logging
 import datetime
 from flask import Flask, redirect, url_for, render_template, request, session, flash
-import sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 
 # simple log
 logger_name = 'app'
@@ -23,6 +24,15 @@ app = Flask(__name__)
 app.secret_key = b'_r@nd0m'
 app.permanent_session_lifetime = datetime.timedelta(days=7)
 
+# prepare to init database
+db_path = os.path.join(os.path.dirname(__file__), 'app.db')
+db_uri = f'sqlite:///{db_path}'
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # optional, suppress noti
+
+
+# define SQLAlchemy object
+db = SQLAlchemy(app)
 
 # simple endpoint
 @app.get('/')
