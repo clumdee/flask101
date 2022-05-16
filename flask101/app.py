@@ -29,6 +29,7 @@ db.init_app(app)
 
 # simple endpoint
 @app.get('/')
+@app.get('/home')
 def home():
     logger.debug('calling home')
     # return 'This is a home page'
