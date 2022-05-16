@@ -51,9 +51,11 @@ def login():
     if request.method == 'POST':
         user = request.form['nm']
         session['user'] = user
+        flash('Login successful!')
         return redirect(url_for('user'))
     else:
         if 'user' in session.keys():
+            flash('Already logged in!')
             return redirect(url_for('user'))
         return render_template('login.html')
 
@@ -63,6 +65,7 @@ def user():
         user = session['user'] 
         return render_template('user.html', user=user)
     else:
+        flash('You are not logged in!')
         return redirect(url_for('login'))
 
 @app.get('/logout')
