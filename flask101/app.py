@@ -35,7 +35,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # optional, suppress noti
 db = SQLAlchemy(app)
 
 # create a model (table) for users
-class users(db.Model):
+class Users(db.Model):
     _id = db.Column('id', db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -76,11 +76,11 @@ def login():
 
         # check if a user exists and retrieve their email
         # create a new user record with NULL email if not exists
-        found_user = users.query.filter_by(name=user).first()
+        found_user = Users.query.filter_by(name=user).first()
         if found_user:
             session['email'] = found_user.email
         else:
-            usr = users(user, None)
+            usr = Users(user, None)
             db.session.add(usr)
             db.session.commit()
 
@@ -102,7 +102,7 @@ def user():
             session['email'] = email
 
             # save user's email to database
-            found_user = users.query.filter_by(name=user).first()
+            found_user = Users.query.filter_by(name=user).first()
             found_user.email = email
             db.session.commit()
 
@@ -123,6 +123,7 @@ def logout():
     if 'user' in session:
         user = session['user']
         session.pop('user', None)
+        session.pop('email', None)
         flash(f'You have been logged out, {user}!', category='info')
     return redirect(url_for('login'))
 
