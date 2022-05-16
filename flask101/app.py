@@ -59,7 +59,7 @@ def login():
 
 @app.get('/user')
 def user():
-    if 'user' in session.keys():
+    if 'user' in session:
         user = session['user'] 
         return f'<h1>{user}</h1>'
     else:
@@ -67,8 +67,10 @@ def user():
 
 @app.get('/logout')
 def logout():
-    session.pop('user', None)
-    flash('You have been logged out!', category='info')
+    if 'user' in session:
+        user = session['user']
+        session.pop('user', None)
+        flash(f'You have been logged out, {user}!', category='info')
     return redirect(url_for('login'))
 
 
