@@ -66,6 +66,10 @@ def admin():
     # return redirect('/not-you')
     return redirect(url_for('user', name='not admin'))
 
+# view Users table
+@app.route('/view')
+def view():
+    return render_template('view.html', values=Users.query.all())
 
 # learning GET/POST
 @app.route('/login', methods=['GET', 'POST'])
